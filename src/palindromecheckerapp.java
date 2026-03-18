@@ -1,11 +1,8 @@
 import java.util.*;
 
-interface PalindromeStrategy {
-    boolean check(String text);
-}
+class PalindromeAlgorithms {
 
-class StackStrategy implements PalindromeStrategy {
-    public boolean check(String text) {
+    public static boolean stackMethod(String text) {
         Stack<Character> stack = new Stack<>();
         for (char c : text.toCharArray()) {
             stack.push(c);
@@ -17,10 +14,8 @@ class StackStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
 
-class DequeStrategy implements PalindromeStrategy {
-    public boolean check(String text) {
+    public static boolean dequeMethod(String text) {
         Deque<Character> deque = new ArrayDeque<>();
         for (char c : text.toCharArray()) {
             deque.addLast(c);
@@ -32,26 +27,38 @@ class DequeStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
 
-class PalindromeChecker {
-    private PalindromeStrategy strategy;
-
-    public PalindromeChecker(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public boolean checkPalindrome(String text) {
-        return strategy.check(text);
+    public static boolean twoPointerMethod(String text) {
+        int left = 0;
+        int right = text.length() - 1;
+        while (left < right) {
+            if (text.charAt(left) != text.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        PalindromeChecker checker = new PalindromeChecker(new StackStrategy());
-        System.out.println(checker.checkPalindrome("madam"));
+        String text = "racecar";
 
-        checker = new PalindromeChecker(new DequeStrategy());
-        System.out.println(checker.checkPalindrome("level"));
+        long start = System.nanoTime();
+        boolean r1 = PalindromeAlgorithms.stackMethod(text);
+        long end = System.nanoTime();
+        System.out.println("Stack Method: " + r1 + " Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        boolean r2 = PalindromeAlgorithms.dequeMethod(text);
+        end = System.nanoTime();
+        System.out.println("Deque Method: " + r2 + " Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        boolean r3 = PalindromeAlgorithms.twoPointerMethod(text);
+        end = System.nanoTime();
+        System.out.println("Two Pointer Method: " + r3 + " Time: " + (end - start) + " ns");
     }
 }
