@@ -1,27 +1,28 @@
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class palindromecheckerapp {
+
+    public static boolean isPalindrome(String str) {
+        str = str.replaceAll("\\s+", "").toLowerCase();
+        int start = 0;
+        int end = str.length() - 1;
+
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        Deque<Character> deque = new LinkedList<>();
-        for (char ch : input.toCharArray()) {
-            deque.addLast(ch);
-        }
-
-        boolean isPalindrome = true;
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome) {
+        if (isPalindrome(input)) {
             System.out.println("The string is a palindrome.");
         } else {
             System.out.println("The string is not a palindrome.");
