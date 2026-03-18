@@ -1,21 +1,32 @@
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Scanner;
+
 public class palindromecheckerapp {
-
-    // Main method - Entry point of the application
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
 
-        // Display welcome message
-        System.out.println("=====================================");
-        System.out.println("   Welcome to Palindrome Checker App ");
-        System.out.println("=====================================");
+        Deque<Character> deque = new LinkedList<>();
+        for (char ch : input.toCharArray()) {
+            deque.addLast(ch);
+        }
 
-        // Display application details
-        System.out.println("Application Name : Palindrome Checker");
-        System.out.println("Version          : 1.0.0");
+        boolean isPalindrome = true;
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                isPalindrome = false;
+                break;
+            }
+        }
 
-        // Inform next step
-        System.out.println("\nApplication is starting...");
-        
-        // Placeholder for next use case
-        System.out.println("Ready to proceed to palindrome checking or exit.");
+        if (isPalindrome) {
+            System.out.println("The string is a palindrome.");
+        } else {
+            System.out.println("The string is not a palindrome.");
+        }
+
+        sc.close();
     }
 }
